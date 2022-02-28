@@ -1,0 +1,62 @@
+server:
+  port: 8097
+
+spring:
+  application:
+    name: debit-service
+  cloud:
+    config:
+      uri: http://localhost:8090
+      username: yloayza
+      password: yloayza2022
+  data:
+    mongodb:
+      uri: mongodb+srv://admin1:admin1@dbproyect.sklmn.mongodb.net/DbProyectDebit?retryWrites=true&w=majority
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8091/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+application:
+  external:
+    comments:
+      url: http://localhost:8095
+      path: /accounts
+
+#defecto (nombre de la configuracion del circuibraker)
+#sliding-window-size (tamaño de la ventana deslizante)
+#failure-rate-threshold (taza de fallas de un umbral)
+#wait-duration-in-open-state (tiempo de espera estado abierto)
+#permitted-number-of-calls-in-half-open-state (cantidad de llamda permitida estado semi-abierto)
+#slow-call-rate-threshold (tasa llamada lentas)
+#slow-call-duration-threshold (tiempo de duracion de la llamada lenta)
+#items (atributo/ nombre circuitbreaker para usarlos en anotaciones)
+#base-config (asignamos la configuracion "defecto")
+#timeout-duration (configuracion del timeout 2s)
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 6
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 4
+        slow-call-rate-threshold: 50
+        slow-call-duration-threshold: 2s
+    instances:
+      debit:
+        base-config: default
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 2s
+    instances:
+      debit:
+        base-config: default
