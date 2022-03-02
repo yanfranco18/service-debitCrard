@@ -6,7 +6,7 @@ spring:
     name: debit-service
   cloud:
     config:
-      uri: http://localhost:8090
+      uri: http://config-server:8090
       username: yloayza
       password: yloayza2022
   data:
@@ -16,7 +16,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8091/eureka/
+      defaultZone: http://eureka-service:8091/eureka/
 management:
   endpoints:
     web:
@@ -26,7 +26,7 @@ management:
 application:
   external:
     comments:
-      url: http://localhost:8095
+      url: http://account-service:8095
       path: /accounts
 
 #defecto (nombre de la configuracion del circuibraker)
